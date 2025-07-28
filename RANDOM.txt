@@ -1,0 +1,707 @@
+--KTRA ÂM DƯƠNG
+package com.viet;
+
+public class KiemTraAmDuong {
+public static void main(String[] args) {
+	@SuppressWarnings("resource")
+	java.util.Scanner sc = new java.util.Scanner(System.in);
+	System.out.print("Nhập một số nguyên: ");
+	int n = sc.nextInt();
+	if (n > 0) {
+		System.out.println(n + " là số dương. ");
+	}else {
+		if (n < 0) {
+			System.out.println(n + " là số âm. ");
+		}
+	}
+}
+}
+
+--KTRA CHẴN LẺ 
+package com.viet;
+
+import java.util.Scanner;
+
+public class KiemTraChanLe {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhập một số nguyên: ");
+        int n = sc.nextInt();
+
+        if (n % 2 == 0) {
+            System.out.println(n + " là số chẵn.");
+        } else {
+            System.out.println(n + " là số lẻ.");
+        }
+
+        sc.close();
+    }
+}
+
+--KTRA TÍNH GIAI THỪA 
+package com.viet;
+
+public class TinhGiaiThua {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
+		@SuppressWarnings("resource")
+		java.util.Scanner sc = new java.util.Scanner(System.in);
+		System.out.print("Nhập một số nguyên dương: ");
+		int n = sc.nextInt();
+		
+		if (n < 0) {
+			System.out.println("Giai thừa không xác định với số âm.");
+			return;
+		}
+		
+		long giaiThua = 1;
+		for (int i = 1; i <= n; i++) {
+			giaiThua *= i;
+		}
+		
+		System.out.println("Giai thừa của " + n + " là: " + giaiThua);
+		sc.close();	
+		
+	}
+
+}
+
+
+--KTRA TỔNG HIỆU TÍCH THƯƠNG 
+import java.util.Scanner;
+
+public class PhepToan {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhập số thứ nhất: ");
+        int a = sc.nextInt();
+        System.out.print("Nhập số thứ hai: ");
+        int b = sc.nextInt();
+
+        System.out.println("Tổng: " + (a + b));
+        System.out.println("Hiệu: " + (a - b));
+        System.out.println("Tích: " + (a * b));
+        if (b != 0)
+            System.out.println("Thương: " + ((double) a / b));
+        else
+            System.out.println("Không thể chia cho 0!");
+    }
+}
+
+
+--KTRA ĐỌC VÀ GHI RA FILE
+
+import java.io.*;
+import java.util.*;
+
+public class XuLyFileTongHop {
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n===== MENU FILE =====");
+            System.out.println("1. Ghi danh sách tên vào file");
+            System.out.println("2. Đọc file và hiển thị nội dung");
+            System.out.println("3. Tính tổng và trung bình số nguyên trong file");
+            System.out.println("4. Đếm số dòng và ký tự trong file");
+            System.out.println("5. Sao chép nội dung file");
+            System.out.println("6. Gộp 2 file thành 1 file mới");
+            System.out.println("7. Sắp xếp số nguyên trong file");
+            System.out.println("8. Tìm kiếm từ khóa trong file");
+            System.out.println("0. Thoát");
+            System.out.print("Chọn chức năng: ");
+            int chon = sc.nextInt();
+            sc.nextLine(); // Xóa dòng thừa
+
+            switch (chon) {
+                case 1 -> ghiDanhSachTen(sc);
+                case 2 -> docVaHienThi();
+                case 3 -> tinhTongTrungBinh();
+                case 4 -> demDongVaKyTu();
+                case 5 -> saoChepFile();
+                case 6 -> gopHaiFile();
+                case 7 -> sapXepSoTrongFile();
+                case 8 -> timKiemTuKhoa(sc);
+                case 0 -> {
+                    System.out.println("Kết thúc chương trình.");
+                    return;
+                }
+                default -> System.out.println("Vui lòng chọn đúng chức năng.");
+            }
+        }
+    }
+
+    // 1. Ghi danh sách tên
+    public static void ghiDanhSachTen(Scanner sc) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("sinhvien.txt"));
+        System.out.print("Nhập số lượng tên: ");
+        int n = Integer.parseInt(sc.nextLine());
+        for (int i = 0; i < n; i++) {
+            System.out.print("Tên thứ " + (i + 1) + ": ");
+            String ten = sc.nextLine();
+            bw.write(ten);
+            bw.newLine();
+        }
+        bw.close();
+        System.out.println("Đã ghi xong vào sinhvien.txt.");
+    }
+
+    // 2. Đọc file và hiển thị
+    public static void docVaHienThi() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("sinhvien.txt"));
+        String line;
+        System.out.println("Nội dung file:");
+        while ((line = br.readLine()) != null) {
+            System.out.println("- " + line);
+        }
+        br.close();
+    }
+
+    // 3. Tính tổng và trung bình
+    public static void tinhTongTrungBinh() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("numbers.txt"));
+        String line;
+        int sum = 0, count = 0;
+        while ((line = br.readLine()) != null) {
+            sum += Integer.parseInt(line);
+            count++;
+        }
+        br.close();
+        if (count > 0) {
+            System.out.println("Tổng: " + sum);
+            System.out.println("Trung bình: " + (sum * 1.0 / count));
+        } else {
+            System.out.println("File rỗng.");
+        }
+    }
+
+    // 4. Đếm dòng và ký tự
+    public static void demDongVaKyTu() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("data.txt"));
+        String line;
+        int dong = 0, kyTu = 0;
+        while ((line = br.readLine()) != null) {
+            dong++;
+            kyTu += line.length(); // không tính xuống dòng
+        }
+        br.close();
+        System.out.println("Số dòng: " + dong);
+        System.out.println("Số ký tự: " + kyTu);
+    }
+
+    // 5. Sao chép nội dung file
+    public static void saoChepFile() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("output.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            bw.write(line);
+            bw.newLine();
+        }
+        br.close();
+        bw.close();
+        System.out.println("Đã sao chép từ input.txt sang output.txt");
+    }
+
+    // 6. Gộp 2 file
+    public static void gopHaiFile() throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("merged.txt"));
+        for (String file : new String[]{"a.txt", "b.txt"}) {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                bw.write(line);
+                bw.newLine();
+            }
+            br.close();
+        }
+        bw.close();
+        System.out.println("Đã gộp a.txt và b.txt vào merged.txt");
+    }
+
+    // 7. Sắp xếp số nguyên trong file
+    public static void sapXepSoTrongFile() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("nums.txt"));
+        List<Integer> ds = new ArrayList<>();
+        String line;
+        while ((line = br.readLine()) != null) {
+            ds.add(Integer.parseInt(line));
+        }
+        br.close();
+
+        Collections.sort(ds);
+        BufferedWriter bw = new BufferedWriter(new FileWriter("sorted.txt"));
+        for (int num : ds) {
+            bw.write(num + "");
+            bw.newLine();
+        }
+        bw.close();
+        System.out.println("Đã sắp xếp và ghi vào sorted.txt");
+    }
+
+    // 8. Tìm kiếm từ khóa trong file
+    public static void timKiemTuKhoa(Scanner sc) throws IOException {
+        System.out.print("Nhập từ khóa cần tìm: ");
+        String tuKhoa = sc.nextLine().toLowerCase();
+        BufferedReader br = new BufferedReader(new FileReader("words.txt"));
+        String line;
+        int dem = 0;
+        while ((line = br.readLine()) != null) {
+            if (line.toLowerCase().contains(tuKhoa)) {
+                dem++;
+            }
+        }
+        br.close();
+        System.out.println("Số dòng chứa từ khóa: " + dem);
+    }
+}
+
+
+--KTRA QUẢN LÍ ALL
+import java.util.Scanner;
+
+public class QuanLyOOPTongHop {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("\n=== MENU CHƯƠNG TRÌNH OOP ===");
+            System.out.println("1. Quản lý Sinh viên");
+            System.out.println("2. Quản lý Nhân viên");
+            System.out.println("3. Quản lý Sách");
+            System.out.println("4. Quản lý Sản phẩm");
+            System.out.println("0. Thoát");
+            System.out.print("Chọn chức năng: ");
+            int chon = sc.nextInt();
+
+            switch (chon) {
+                case 1 -> QLSinhVien.run(sc);
+                case 2 -> QLNhanVien.run(sc);
+                case 3 -> QLSach.run(sc);
+                case 4 -> QLSanPham.run(sc);
+                case 0 -> {
+                    System.out.println("Thoát chương trình.");
+                    return;
+                }
+                default -> System.out.println("Chức năng không hợp lệ.");
+            }
+        }
+    }
+}
+
+// ======= 1. SinhVien =======
+class SinhVien {
+    String ma, ten;
+    double diem;
+
+    SinhVien(String ma, String ten, double diem) {
+        this.ma = ma;
+        this.ten = ten;
+        this.diem = diem;
+    }
+
+    public String toString() {
+        return ma + " - " + ten + " - " + diem;
+    }
+}
+
+class QLSinhVien {
+    public static void run(Scanner sc) {
+        System.out.print("Nhập số SV: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+        SinhVien[] sv = new SinhVien[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("SV " + (i + 1));
+            System.out.print("Mã: ");
+            String ma = sc.nextLine();
+            System.out.print("Tên: ");
+            String ten = sc.nextLine();
+            System.out.print("Điểm: ");
+            double diem = sc.nextDouble(); sc.nextLine();
+            sv[i] = new SinhVien(ma, ten, diem);
+        }
+
+        System.out.println("Danh sách sinh viên:");
+        for (SinhVien s : sv) {
+            System.out.println(s);
+        }
+
+        double max = sv[0].diem;
+        for (SinhVien s : sv)
+            if (s.diem > max) max = s.diem;
+
+        System.out.println("SV có điểm cao nhất:");
+        for (SinhVien s : sv)
+            if (s.diem == max) System.out.println(s);
+    }
+}
+
+// ======= 2. NhanVien =======
+class NhanVien {
+    String ma, ten;
+    double luong;
+
+    NhanVien(String ma, String ten, double luong) {
+        this.ma = ma;
+        this.ten = ten;
+        this.luong = luong;
+    }
+
+    public String toString() {
+        return ma + " - " + ten + " - " + luong;
+    }
+}
+
+class QLNhanVien {
+    public static void run(Scanner sc) {
+        System.out.print("Nhập số NV: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+        NhanVien[] nv = new NhanVien[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("NV " + (i + 1));
+            System.out.print("Mã: ");
+            String ma = sc.nextLine();
+            System.out.print("Tên: ");
+            String ten = sc.nextLine();
+            System.out.print("Lương: ");
+            double luong = sc.nextDouble(); sc.nextLine();
+            nv[i] = new NhanVien(ma, ten, luong);
+        }
+
+        System.out.println("Danh sách nhân viên:");
+        for (NhanVien x : nv) System.out.println(x);
+
+        double tong = 0, max = nv[0].luong;
+        for (NhanVien x : nv) {
+            tong += x.luong;
+            if (x.luong > max) max = x.luong;
+        }
+
+        System.out.println("Tổng lương: " + tong);
+        System.out.println("NV có lương cao nhất:");
+        for (NhanVien x : nv)
+            if (x.luong == max) System.out.println(x);
+    }
+}
+
+// ======= 3. Sach =======
+class Sach {
+    String ma, ten;
+    double gia;
+
+    Sach(String ma, String ten, double gia) {
+        this.ma = ma;
+        this.ten = ten;
+        this.gia = gia;
+    }
+
+    public String toString() {
+        return ma + " - " + ten + " - " + gia;
+    }
+}
+
+class QLSach {
+    public static void run(Scanner sc) {
+        System.out.print("Nhập số sách: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+        Sach[] ds = new Sach[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("Sách " + (i + 1));
+            System.out.print("Mã: ");
+            String ma = sc.nextLine();
+            System.out.print("Tên: ");
+            String ten = sc.nextLine();
+            System.out.print("Giá: ");
+            double gia = sc.nextDouble(); sc.nextLine();
+            ds[i] = new Sach(ma, ten, gia);
+        }
+
+        System.out.println("Danh sách sách:");
+        for (Sach s : ds) System.out.println(s);
+
+        double max = ds[0].gia, tong = 0;
+        for (Sach s : ds) {
+            tong += s.gia;
+            if (s.gia > max) max = s.gia;
+        }
+
+        System.out.println("Sách có giá cao nhất:");
+        for (Sach s : ds)
+            if (s.gia == max) System.out.println(s);
+
+        System.out.println("Giá trung bình: " + (tong / n));
+    }
+}
+
+// ======= 4. SanPham =======
+class SanPham {
+    String ma, ten;
+    int sl;
+    double gia;
+
+    SanPham(String ma, String ten, int sl, double gia) {
+        this.ma = ma;
+        this.ten = ten;
+        this.sl = sl;
+        this.gia = gia;
+    }
+
+    double tongTien() {
+        return sl * gia;
+    }
+
+    public String toString() {
+        return ma + " - " + ten + " - SL: " + sl + " - Đơn giá: " + gia + " - Tổng: " + tongTien();
+    }
+}
+
+class QLSanPham {
+    public static void run(Scanner sc) {
+        System.out.print("Nhập số sản phẩm: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+        SanPham[] sp = new SanPham[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("SP " + (i + 1));
+            System.out.print("Mã: ");
+            String ma = sc.nextLine();
+            System.out.print("Tên: ");
+            String ten = sc.nextLine();
+            System.out.print("Số lượng: ");
+            int sl = sc.nextInt();
+            System.out.print("Đơn giá: ");
+            double gia = sc.nextDouble(); sc.nextLine();
+            sp[i] = new SanPham(ma, ten, sl, gia);
+        }
+
+        System.out.println("Danh sách sản phẩm:");
+        for (SanPham s : sp) System.out.println(s);
+
+        double max = sp[0].tongTien();
+        for (SanPham s : sp)
+            if (s.tongTien() > max) max = s.tongTien();
+
+        System.out.println("SP có tổng tiền cao nhất:");
+        for (SanPham s : sp)
+            if (s.tongTien() == max) System.out.println(s);
+    }
+}
+
+
+-KTRA GIAI PT BAC 1
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class GiaiPTB1 extends JFrame {
+    private JTextField txtA, txtB;
+    private JLabel lblKq;
+
+    public GiaiPTB1() {
+        setTitle("Giải phương trình bậc 1: ax + b = 0");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new GridLayout(5, 2, 5, 5));
+
+        add(new JLabel("a ="));
+        txtA = new JTextField();
+        add(txtA);
+
+        add(new JLabel("b ="));
+        txtB = new JTextField();
+        add(txtB);
+
+        JButton btnSolve = new JButton("Giải");
+        btnSolve.addActionListener(this::giaiPT);
+        add(btnSolve);
+
+        JButton btnClear = new JButton("Xóa");
+        btnClear.addActionListener(e -> {
+            txtA.setText("");
+            txtB.setText("");
+            lblKq.setText("Kết quả: ");
+        });
+        add(btnClear);
+
+        lblKq = new JLabel("Kết quả: ");
+        add(lblKq);
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void giaiPT(ActionEvent e) {
+        try {
+            double a = Double.parseDouble(txtA.getText().trim());
+            double b = Double.parseDouble(txtB.getText().trim());
+
+            if (a == 0) {
+                if (b == 0) lblKq.setText("Kết quả: Vô số nghiệm");
+                else lblKq.setText("Kết quả: Vô nghiệm");
+            } else {
+                double x = -b / a;
+                lblKq.setText("Kết quả: x = " + x);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số hợp lệ!", "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(GiaiPTB1::new);
+    }
+}
+
+
+-KTRA TỔNG HIỆU TÍCH THƯƠNG 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class PhepToan2So extends JFrame {
+    private JTextField txtA, txtB;
+    private JLabel lblTong, lblHieu, lblTich, lblThuong;
+
+    public PhepToan2So() {
+        setTitle("Phép toán 2 số nguyên");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new GridLayout(7, 2, 5, 5));
+
+        add(new JLabel("a ="));
+        txtA = new JTextField();
+        add(txtA);
+
+        add(new JLabel("b ="));
+        txtB = new JTextField();
+        add(txtB);
+
+        JButton btnCalc = new JButton("Tính");
+        btnCalc.addActionListener(this::tinhToan);
+        add(btnCalc);
+
+        JButton btnClear = new JButton("Xóa");
+        btnClear.addActionListener(e -> {
+            txtA.setText("");
+            txtB.setText("");
+            lblTong.setText("Tổng: ");
+            lblHieu.setText("Hiệu: ");
+            lblTich.setText("Tích: ");
+            lblThuong.setText("Thương: ");
+        });
+        add(btnClear);
+
+        lblTong = new JLabel("Tổng: ");
+        lblHieu = new JLabel("Hiệu: ");
+        lblTich = new JLabel("Tích: ");
+        lblThuong = new JLabel("Thương: ");
+
+        add(lblTong);
+        add(lblHieu);
+        add(lblTich);
+        add(lblThuong);
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void tinhToan(ActionEvent e) {
+        try {
+            int a = Integer.parseInt(txtA.getText().trim());
+            int b = Integer.parseInt(txtB.getText().trim());
+
+            lblTong.setText("Tổng: " + (a + b));
+            lblHieu.setText("Hiệu: " + (a - b));
+            lblTich.setText("Tích: " + (a * b));
+            if (b != 0) {
+                lblThuong.setText("Thương: " + ((double) a / b));
+            } else {
+                lblThuong.setText("Thương: Không thể chia cho 0");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số nguyên hợp lệ!", "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(PhepToan2So::new);
+    }
+}
+
+
+--KTRA MIN MAX 3 SỐ 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class MinMax3So extends JFrame {
+    private JTextField txtA, txtB, txtC;
+    private JLabel lblMin, lblMax;
+
+    public MinMax3So() {
+        setTitle("Tìm Min & Max của 3 số nguyên");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new GridLayout(6, 2, 5, 5));
+
+        add(new JLabel("a ="));
+        txtA = new JTextField();
+        add(txtA);
+
+        add(new JLabel("b ="));
+        txtB = new JTextField();
+        add(txtB);
+
+        add(new JLabel("c ="));
+        txtC = new JTextField();
+        add(txtC);
+
+        JButton btnCalc = new JButton("Tính Min/Max");
+        btnCalc.addActionListener(this::tinhMinMax);
+        add(btnCalc);
+
+        JButton btnClear = new JButton("Xóa");
+        btnClear.addActionListener(e -> {
+            txtA.setText("");
+            txtB.setText("");
+            txtC.setText("");
+            lblMin.setText("Min: ");
+            lblMax.setText("Max: ");
+        });
+        add(btnClear);
+
+        lblMin = new JLabel("Min: ");
+        lblMax = new JLabel("Max: ");
+        add(lblMin);
+        add(lblMax);
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void tinhMinMax(ActionEvent e) {
+        try {
+            int a = Integer.parseInt(txtA.getText().trim());
+            int b = Integer.parseInt(txtB.getText().trim());
+            int c = Integer.parseInt(txtC.getText().trim());
+
+            int min = Math.min(a, Math.min(b, c));
+            int max = Math.max(a, Math.max(b, c));
+
+            lblMin.setText("Min: " + min);
+            lblMax.setText("Max: " + max);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số nguyên hợp lệ!", "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(MinMax3So::new);
+    }
+}
